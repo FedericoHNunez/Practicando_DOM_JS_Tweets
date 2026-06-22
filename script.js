@@ -168,8 +168,21 @@ dislikeTweet(tweet_id)
 quitarRetweet(tweet_id) 
     decrementar en 1 la cantidad de retweets de ese tweet si existe
 */
+
+
+const feed_HTML = document.getElementById('contenedor-tweets')
+const btnReTweet_HTML = document.getElementById('btn-retweet')
+const btnLike_HTML = document.getElementById('btn-like')
 let ArrayEstadoRetweets = []
 let ArrayEstadoLikes = []
+
+document.addEventListener("DOMContentLoaded", function () {
+if (feed_HTML) {
+  feed_HTML.innerHTML = renderFeed()
+}
+})
+
+
 function setEstadoLikes(nuevoEstado) {
   ArrayEstadoLikes = nuevoEstado
   feed_HTML.innerHTML = renderFeed()
@@ -233,11 +246,17 @@ const renderFeed = () => {
                 </p>    
           ${renderAttachments(tweet.attachments, tweet.author_name)}
           <div class="btns-interaccion">
-              <button id="like-btn" class="btn-like">
-                  ${ ArrayEstadoLikes.includes(tweet.id) ? 'likeado ❤' : 'like 🤍'} ${tweet.likes}
+              <button 
+                  id="like-btn${tweet.id}" 
+                  class="btn-like"
+                  data-tweet-id="${tweet.id}">
+                  ${ ArrayEstadoLikes.includes(tweet.id) ? 'likeado❤' : 'like🤍'} ${tweet.likes}
               </button>
-              <button id="retweet-btn " class="btn-retweet">
-                  ${ ArrayEstadoRetweets.includes(tweet.id)? 'retweeteado 🔄' : 'retweet 🔂'} ${tweet.retweets}
+              <button 
+                  id="retweet-btn${tweet.id}" 
+                  class="btn-retweet"
+                  data-tweet-id="${tweet.id}">
+                  ${ ArrayEstadoRetweets.includes(tweet.id)? 'retweeteado🔄' : 'retweet🔂'} ${tweet.retweets}
               </button>
           </div>
           <div class="comentarios">
@@ -361,11 +380,4 @@ const retweetear = (tweet_id) => {
   let clone_tweets = [...tweets]
   clone_tweets[indice].retweets += 1
   setEstadoTweets(clone_tweets)
-}
-
-
-
-const feed_HTML = document.getElementById('contenedor-tweets')
-if (feed_HTML) {
-  feed_HTML.innerHTML = renderFeed()
 }
