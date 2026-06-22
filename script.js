@@ -11,7 +11,7 @@ let tweets = [
       { author_name: "JuanJS", content: "¿Lo tenés en GitHub?" }
     ],
     attachments: [
-      { url: "./img/1.avif" }
+      { url: "./img/1.jpg" }
     ]
   },
   {
@@ -24,7 +24,7 @@ let tweets = [
       { author_name: "PedroUI", content: "Grid es increíble." }
     ],
     attachments: [
-      { url: "./img/2.webp" }
+      { url: "./img/2.jpg" }
     ]
   },
   {
@@ -38,7 +38,7 @@ let tweets = [
       { author_name: "SofiaTech", content: "WebStorm para proyectos grandes." }
     ],
     attachments: [
-      { url: "./img/3.avif" }
+      { url: "./img/3.jpg" }
     ]
   },
   {
@@ -51,7 +51,7 @@ let tweets = [
       { author_name: "AnaCode", content: "Un concepto fundamental." }
     ],
     attachments: [
-      { url: "./img/4.webp" }
+      { url: "./img/4.jpg" }
     ]
   },
   {
@@ -65,7 +65,7 @@ let tweets = [
       { author_name: "FrontendFan", content: "Muy útiles." }
     ],
     attachments: [
-      { url: "./img/5.webp" }
+      { url: "./img/5.jpg" }
     ]
   },
   {
@@ -78,7 +78,7 @@ let tweets = [
       { author_name: "MateDev", content: "Yo prefiero mate 😄" }
     ],
     attachments: [
-      { url: "./img/6.webp" }
+      { url: "./img/6.jpg" }
     ]
   },
   {
@@ -91,13 +91,13 @@ let tweets = [
       { author_name: "WebDesigner", content: "Se ve genial." }
     ],
     attachments: [
-      { url: "./img/7.jfif" }
+      { url: "./img/7.jpg" }
     ]
   },
   {
     id: 8,
     content: "Tip rápido: usá const siempre que no reasignes valores.",
-    author_name: "JSTips",
+    author_name: "JSBestPractices",
     likes: 410,
     retweets: 103,
     comments: [
@@ -105,7 +105,7 @@ let tweets = [
       { author_name: "DevJunior", content: "Lo voy a aplicar." }
     ],
     attachments: [
-      { url: "./img/8.avif" }
+      { url: "./img/8.jpg" }
     ]
   },
   {
@@ -119,7 +119,7 @@ let tweets = [
       { author_name: "VueFan", content: "Vue.js." }
     ],
     attachments: [
-      { url: "./img/9.avif" }
+      { url: "./img/9.jpg" }
     ]
   },
   {
@@ -133,7 +133,7 @@ let tweets = [
       { author_name: "NicoCoder", content: "Esperando el deploy." }
     ],
     attachments: [
-      { url: "./img/10.avif" }
+      { url: "./img/10.jpg" }
     ]
   }
 ];
@@ -226,39 +226,40 @@ const renderFeed = () => {
   let feed = ``
   for (let tweet of tweets) {
     feed +=
-      `<Article>
-            <h2>${tweet.author_name}</h2>
-                <p>
+      `<article class="tweet">
+            <h2>@${tweet.author_name}</h2>
+                <p class="content-tweet">
                    ${tweet.content}
                 </p>    
           ${renderAttachments(tweet.attachments, tweet.author_name)}
-          <div>
-              <button id="like-btn">
+          <div class="btns-interaccion">
+              <button id="like-btn" class="btn-like">
                   ${ ArrayEstadoLikes.includes(tweet.id) ? 'likeado ❤' : 'like 🤍'} ${tweet.likes}
               </button>
-              <button id="retweet-btn">
+              <button id="retweet-btn " class="btn-retweet">
                   ${ ArrayEstadoRetweets.includes(tweet.id)? 'retweeteado 🔄' : 'retweet 🔂'} ${tweet.retweets}
               </button>
           </div>
-          <ul>
-            ${renderComment(tweet.comments)}
-          </ul>
+          <div class="comentarios">
+            <h3>Comentarios</h3>
+            <ul>
+              ${renderComment(tweet.comments)}
+            </ul>
+          </div>
         </article>`
   }
   return feed
 }
 
-
-
-
-
 const renderComment = (Arraycomments) => {
   let comments = ``
   for (let comment of Arraycomments) {
     comments +=
-      `<li>
-         <h3>${comment.author_name}</h3>
-            <p>
+      `<li class="comment">
+         <h4 class="comment-author">
+             <a href="#">@${comment.author_name}</a>
+          </h4>
+            <p class="comment-content">
               ${comment.content}
             </p>
       </li>`

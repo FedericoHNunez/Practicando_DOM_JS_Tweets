@@ -2,12 +2,13 @@
 
 /* root */
 :root{
-
+--color0: #02013d;
 --color1: #0079e5;
 --color2: #6799f7;
 --color3: #b0beff;
 --color4: #e8e6ff;
 --color5: #ffffff;
+
 
 }
 /* nomalize */
@@ -19,7 +20,12 @@
 
 /* globales */
 html{
-    font-size: 62.5%;
+    font-size: 50%;
+}
+@media screen and (min-width: 768px){
+    html{
+        font-size: 62.5%;
+    }
 }
 body{
     font-family: 'Poppins', sans-serif;
@@ -27,7 +33,7 @@ body{
 }
 main{
     width: 90%;
-    margin: 0 auto
+    margin: 0 auto;
 }
 
 @media screen and (min-width: 768px){
@@ -37,7 +43,7 @@ main{
 }
 
 header{
-    padding: 2rem;
+    padding: 1rem;
     background-color: var(--color1);
     position: sticky;
     top: 0;
@@ -48,6 +54,18 @@ h1{
     text-align: center;
     margin: 1rem;
     color: var(--color5);
+}
+h3{
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+h2{
+    font-size: 2.4rem;
+    margin-bottom: 1rem;
+}
+h4{
+    font-size: 1.4rem;
+    margin: 0.5rem 0;
 }
 a,
 ul{
@@ -76,13 +94,60 @@ img{
     justify-content: center;
     align-items: center;
     gap: 2rem;
-
 }
 
+.tweet{
+    background-color: var(--color4);
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.content-tweet{
+    font-size: 1.6rem;
+    padding-bottom: 2rem;
+}   
+
+.btns-interaccion{
+    display: flex;
+    justify-content: flex-end;
+    gap: 2rem;
+    padding: 1rem;
+}   
+
+.btn-like,
+.btn-retweet{
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    font-size: 1.4rem;
+    transition: background-color 0.3s ease;
+    border: 1px solid var(--color3);
+    border-radius: 5px;
+    color: var(--color0);
+}   
 
 .img-container {
-    width: 600px;
+    max-width: 600px;
     border-radius: 10px;
     display: flex;
     justify-content: center;
+}
+.comment{
+    margin-bottom: 1rem;
+}
+.comentarios{
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: var(--color5);
+    border-radius: 10px;
+}
+
+.comment-author a{
+    font-size: 1.6rem;
+    color: var(--color1);
+}
+
+.comment-content{
+    font-size: 1.4rem;
+    padding: 0 1rem;
 }
