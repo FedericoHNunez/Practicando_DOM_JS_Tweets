@@ -11,7 +11,7 @@ let tweets = [
       { author_name: "JuanJS", content: "¿Lo tenés en GitHub?" }
     ],
     attachments: [
-      { url: "https://picsum.photos/id/1/600/400" }
+      { url: "./img/1.avif" }
     ]
   },
   {
@@ -24,7 +24,7 @@ let tweets = [
       { author_name: "PedroUI", content: "Grid es increíble." }
     ],
     attachments: [
-      { url: "https://picsum.photos/id/20/600/400" }
+      { url: "./img/2.webp" }
     ]
   },
   {
@@ -38,7 +38,7 @@ let tweets = [
       { author_name: "SofiaTech", content: "WebStorm para proyectos grandes." }
     ],
     attachments: [
-      { url: "https://picsum.photos/id/30/600/400" }
+      { url: "./img/3.avif" }
     ]
   },
   {
@@ -51,7 +51,7 @@ let tweets = [
       { author_name: "AnaCode", content: "Un concepto fundamental." }
     ],
     attachments: [
-      { url: "https://picsum.photos/id/40/600/400" }
+      { url: "./img/4.webp" }
     ]
   },
   {
@@ -65,7 +65,7 @@ let tweets = [
       { author_name: "FrontendFan", content: "Muy útiles." }
     ],
     attachments: [
-      { url: "https://picsum.photos/id/50/600/400" }
+      { url: "./img/5.webp" }
     ]
   },
   {
@@ -78,7 +78,7 @@ let tweets = [
       { author_name: "MateDev", content: "Yo prefiero mate 😄" }
     ],
     attachments: [
-      { url: "https://picsum.photos/id/60/600/400" }
+      { url: "./img/6.webp" }
     ]
   },
   {
@@ -91,7 +91,7 @@ let tweets = [
       { author_name: "WebDesigner", content: "Se ve genial." }
     ],
     attachments: [
-      { url: "https://picsum.photos/id/70/600/400" }
+      { url: "./img/7.jfif" }
     ]
   },
   {
@@ -105,7 +105,7 @@ let tweets = [
       { author_name: "DevJunior", content: "Lo voy a aplicar." }
     ],
     attachments: [
-      { url: "https://picsum.photos/id/80/600/400" }
+      { url: "./img/8.avif" }
     ]
   },
   {
@@ -119,8 +119,7 @@ let tweets = [
       { author_name: "VueFan", content: "Vue.js." }
     ],
     attachments: [
-      { url: "https://picsum.photos/id/90/600/400" }
-
+      { url: "./img/9.avif" }
     ]
   },
   {
@@ -134,7 +133,7 @@ let tweets = [
       { author_name: "NicoCoder", content: "Esperando el deploy." }
     ],
     attachments: [
-      { url: "https://picsum.photos/id/100/600/400" }
+      { url: "./img/10.avif" }
     ]
   }
 ];
@@ -173,13 +172,16 @@ let ArrayEstadoRetweets = []
 let ArrayEstadoLikes = []
 function setEstadoLikes(nuevoEstado) {
   ArrayEstadoLikes = nuevoEstado
+  feed_HTML.innerHTML = renderFeed()
 }
+// logica para actualizar el estado de los retweets
 function setEstadoRetweets(nuevoEstado) {
   ArrayEstadoRetweets = nuevoEstado
+  feed_HTML.innerHTML = renderFeed()
 }
 
+// logica para actualizar el estado de los tweets
 function setEstadoTweets(nuevoEstado) {
-  // logica para actualizar el estado de los tweets
   tweets = nuevoEstado
   console.log(tweets)
   feed_HTML.innerHTML = renderFeed()
@@ -204,7 +206,6 @@ const devolverTweetIndex = id => {
   const indice = tweets.findIndex(tweet => tweet.id === id)
   return indice
 }
-
 function agregarTweet(id, author_name, content) {
   if (!id || !author_name || !content) {
     return;
@@ -218,14 +219,14 @@ function agregarTweet(id, author_name, content) {
     comments: [],
     attachments: []
   }
-  let clone_tweets = [...tweets, tweet] 
+  let clone_tweets = [...tweets, tweet]
   setEstadoTweets(clone_tweets)
 }
- const renderFeed = () => {
-    let feed = ``
-    for (let tweet of tweets) {
-      feed +=
-        `<Article>
+const renderFeed = () => {
+  let feed = ``
+  for (let tweet of tweets) {
+    feed +=
+      `<Article>
             <h2>${tweet.author_name}</h2>
                 <p>
                    ${tweet.content}
@@ -233,19 +234,19 @@ function agregarTweet(id, author_name, content) {
           ${renderAttachments(tweet.attachments, tweet.author_name)}
           <div>
               <button id="like-btn">
-                  ${ ArrayEstadoLikes.includes(tweet.id) ? 'likeado' : 'like'} ${tweet.likes}
+                  ${ ArrayEstadoLikes.includes(tweet.id) ? 'likeado ❤' : 'like 🤍'} ${tweet.likes}
               </button>
               <button id="retweet-btn">
-                  ${ ArrayEstadoRetweets.includes(tweet.id)? 'retweeteado' : 'retweet'} ${tweet.retweets}
+                  ${ ArrayEstadoRetweets.includes(tweet.id)? 'retweeteado 🔄' : 'retweet 🔂'} ${tweet.retweets}
               </button>
           </div>
           <ul>
             ${renderComment(tweet.comments)}
           </ul>
         </article>`
-    }
-    return feed
   }
+  return feed
+}
 
 
 
@@ -269,99 +270,96 @@ const renderAttachments = (ArrayAttachments, author_name) => {
   let attachments = ``
   for (let attachment of ArrayAttachments) {
     attachments +=
-      `<div>
+      `<div class="img-container">
       <img src=${attachment.url} alt="Imagen del tweet generado por el usuario ${author_name}">
     </div>`
   }
   return attachments
 }
-
 const agregarComentario = (tweet_id, author_name, comment) => {
-  if (!existeId(tweet_id)) {return}    
+  if (!existeId(tweet_id)) { return }
   let clone_tweets = [...tweets]
   const indice = devolverTweetIndex(tweet_id)
-  clone_tweets[indice].comments.push({ 
-                          author_name: author_name,
-                           content: comment 
-                        })
+  clone_tweets[indice].comments.push({
+    author_name: author_name,
+    content: comment
+  })
   setEstadoTweets(clone_tweets)
-  
 }
-
 const modificarContenidoTweet = (tweet_id, nuevo_contenido) => {
-    if (!existeId(tweet_id)) {return}
-    const indice = devolverTweetIndex(tweet_id)
-    let clone_tweets = [...tweets]
-    clone_tweets[indice].content = nuevo_contenido
-    setEstadoTweets(clone_tweets)
+  if (!existeId(tweet_id)) { return }
+  const indice = devolverTweetIndex(tweet_id)
+  let clone_tweets = [...tweets]
+  clone_tweets[indice].content = nuevo_contenido
+  setEstadoTweets(clone_tweets)
 
 }
 const eliminarTweet = (tweet_id) => {
-    if (!existeId(tweet_id)) {return}
-    const indice = devolverTweetIndex(tweet_id)
-    let clone_tweets = [...tweets]
-    clone_tweets.splice(indice, 1)
-    setEstadoTweets(clone_tweets)
+  if (!existeId(tweet_id)) { return }
+  const indice = devolverTweetIndex(tweet_id)
+  let clone_tweets = [...tweets]
+  clone_tweets.splice(indice, 1)
+  setEstadoTweets(clone_tweets)
 }
 
 
 const BtnLike = (tweet_id) => {
-    if (!existeId(tweet_id)) {return}
-    const clone_Arraylikes = [...ArrayEstadoLikes]
-    const indice = clone_Arraylikes.indexOf(tweet_id)
-    if (indice !== -1) {
-        eliminarLike(tweet_id)
-        clone_Arraylikes.splice(indice, 1)
+  if (!existeId(tweet_id)) { return }
+  const clone_Arraylikes = [...ArrayEstadoLikes]
+  const indice = clone_Arraylikes.indexOf(tweet_id)
+  if (indice !== -1) {
+    eliminarLike(tweet_id)
+    clone_Arraylikes.splice(indice, 1)
 
-    } else {
-        clone_Arraylikes.push(tweet_id)
-        agregarLike(tweet_id)
-      }
-      setEstadoLikes(clone_Arraylikes)
+  } else {
+    clone_Arraylikes.push(tweet_id)
+    agregarLike(tweet_id)
   }
+  setEstadoLikes(clone_Arraylikes)
+}
 
-  const BtnRetweet = (tweet_id) => {
-    if (!existeId(tweet_id)) {return}
-    const clone_ArrayRetweets = [...ArrayEstadoRetweets]
-    const indice = clone_ArrayRetweets.indexOf(tweet_id)
-    if (indice !== -1) {
-        quitarRetweet(tweet_id)
-        clone_ArrayRetweets.splice(indice, 1)
+const BtnRetweet = (tweet_id) => {
+  if (!existeId(tweet_id)) { return }
+  const clone_ArrayRetweets = [...ArrayEstadoRetweets]
+  const indice = clone_ArrayRetweets.indexOf(tweet_id)
+  if (indice !== -1) {
+    quitarRetweet(tweet_id)
+    clone_ArrayRetweets.splice(indice, 1)
 
-    } else {
-        clone_ArrayRetweets.push(tweet_id)
-        retweetear(tweet_id)
-      }
-      setEstadoRetweets(clone_ArrayRetweets)
-    }
-  
+  } else {
+    clone_ArrayRetweets.push(tweet_id)
+    retweetear(tweet_id)
+  }
+  setEstadoRetweets(clone_ArrayRetweets)
+}
+
 const agregarLike = (tweet_id) => {
-    const indice = devolverTweetIndex(tweet_id)
-    let clone_tweets = [...tweets]
-    clone_tweets[indice].likes += 1
-    setEstadoTweets(clone_tweets)
+  const indice = devolverTweetIndex(tweet_id)
+  let clone_tweets = [...tweets]
+  clone_tweets[indice].likes += 1
+  setEstadoTweets(clone_tweets)
 }
 const eliminarLike = (tweet_id) => {
-    const indice = devolverTweetIndex(tweet_id)
-    let clone_tweets = [...tweets]
-    clone_tweets[indice].likes -= 1
-    setEstadoTweets(clone_tweets)
+  const indice = devolverTweetIndex(tweet_id)
+  let clone_tweets = [...tweets]
+  clone_tweets[indice].likes -= 1
+  setEstadoTweets(clone_tweets)
 }
 
 const quitarRetweet = (tweet_id) => {
-    const indice = devolverTweetIndex(tweet_id)    
-    let clone_tweets = [...tweets]    
-    clone_tweets[indice].retweets -= 1
-    setEstadoTweets(clone_tweets)
+  const indice = devolverTweetIndex(tweet_id)
+  let clone_tweets = [...tweets]
+  clone_tweets[indice].retweets -= 1
+  setEstadoTweets(clone_tweets)
 
 }
 
 const retweetear = (tweet_id) => {
-    if (!existeId(tweet_id)) {return}
-    const indice = devolverTweetIndex(tweet_id)
-    let clone_tweets = [...tweets]
-    clone_tweets[indice].retweets += 1
-    setEstadoTweets(clone_tweets)
+  if (!existeId(tweet_id)) { return }
+  const indice = devolverTweetIndex(tweet_id)
+  let clone_tweets = [...tweets]
+  clone_tweets[indice].retweets += 1
+  setEstadoTweets(clone_tweets)
 }
 
 
@@ -370,5 +368,3 @@ const feed_HTML = document.getElementById('contenedor-tweets')
 if (feed_HTML) {
   feed_HTML.innerHTML = renderFeed()
 }
-const like_btn_HTML = document.getElementById('like-btn')
-const retweet_btn_HTML = document.getElementById('retweet-btn')
